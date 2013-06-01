@@ -7,24 +7,24 @@ environments:
     production:
         adapter: mysql
         host: localhost
-        name:
-        user:
-        pass:
+        name: dew
+        user: root
+        pass: 'P@ssw0rd!'
         port: 3306
                 
     development:
         adapter: mysql
         host: localhost
-        name:
-        user:
-        pass:
+        name: dew
+        user: root
+        pass: ''
         port: 3306
                     
     testing:
         adapter: mysql
         host: localhost
-        name:
-        user:
-        pass: 
+        name: testing_db
+        user: root
+        pass: ''
         port: 3306
                  

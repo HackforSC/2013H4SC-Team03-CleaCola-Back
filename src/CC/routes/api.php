@@ -1,6 +1,6 @@
 <?php
 
-$app->get('/api', function() use ($app) {
+$app->get('/', function() use ($app) {
     $app->render('api.php');
 });
 

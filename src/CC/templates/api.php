@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span12">
-            <h1>CleanCola.org API</h1>
+            <h1>api.cleancola.org</h1>
 
             <div class="well">
                 <h3>Get Incidents</h3>
@@ -18,7 +18,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents</td>
+                        <td>http://api.cleancola.org/v1/incidents</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -48,7 +48,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents/:id</td>
+                        <td>http://api.cleancola.org/v1/incidents/:id</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -78,7 +78,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents</td>
+                        <td>http://api.cleancola.org/v1/incidents</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents/:id/vote</td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/vote</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -138,7 +138,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/categories</td>
+                        <td>http://api.cleancola.org/v1/categories</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -168,7 +168,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents/:id/flag</td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/flag</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -198,7 +198,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents/:id/close</td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/close</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -228,7 +228,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://cleancola.org/api/v1/incidents/:id/open</td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/open</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
