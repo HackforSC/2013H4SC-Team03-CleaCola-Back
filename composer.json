@@ -1,0 +1,28 @@
+{
+    "name": "cleancola.org",
+    "description": "Blah",
+    "minimum-stability": "dev",
+    "authors": [
+        {
+            "name": "Jonathan Mayhak",
+            "email": "hello@jonathanmayhak.com"
+        }
+    ],
+    "require": {
+        "slim/slim": "dev-master",
+        "slim/extras": "2.0.3",
+        "symfony/class-loader": "2.2.x-dev",
+        "symfony/finder": "*",
+        "symfony/security": "*",
+        "doctrine/orm": "2.3.3",
+        "symfony/yaml": "2.*",
+        "codeguy/upload": "*",
+        "ircmaxell/password-compat": "dev-master",
+        "robmorgan/phinx": "v0.2.5",
+        "monolog/monolog": "1.5.0",
+        "flynsarmy/slim-monolog": "dev-master",
+        "phpunit/phpunit": "3.7.*",
+        "phpunit/dbunit": ">=1.2",
+        "mandrill/mandrill": "dev-master"
+    }
+}

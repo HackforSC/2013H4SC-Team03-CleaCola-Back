@@ -1,0 +1,8 @@
+composer.lock
+uploads/*
+.idea/
+vendor/
+*.DS_Store
+public_html\components\tinymce\js\tinymce\plugins\moxiemanager\data/
+public_html/components/tinymce/js/tinymce/plugins/moxiemanager/data/*
+public_html/assets/lesson/dew-learning/.sass-cache/*
