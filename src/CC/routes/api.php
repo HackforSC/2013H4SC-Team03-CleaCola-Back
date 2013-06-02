@@ -32,9 +32,10 @@ $app->get('/v1/incidents', function () use ($app) {
 
     $db = \CC\Helper\DB::instance();
     $stmt = $db->prepare('
-        SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, id, latitude, longitude, description, date_created, is_flagged, is_closed, category_id
+        SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
         FROM Incidents
-        WHERE category_id = :category_id
+        LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
+        WHERE category_id = :category_id AND is_closed IS NOT null
         HAVING distance <= :range
     ');
     $stmt->execute(array(
@@ -52,9 +53,10 @@ $app->get('/v1/incidents', function () use ($app) {
 $app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
-        SELECT id, latitude, longitude, description, date_created, is_flagged, is_closed, category_id
+        SELECT Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
         FROM Incidents
-        WHERE id = :id
+        LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
+        WHERE Incidents.id = :id
     ');
 
     $get_stmt->execute(array(
@@ -67,17 +69,17 @@ $app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
 });
 
 $app->post('/v1/incidents', function () use ($app) {
-    /*$latlng = $app->request()->post('latlng');
+    $latlng = $app->request()->post('latlng');
     $category_id = $app->request()->post('category_id');
     $description = $app->request()->post('description');
 
-    $latlng_split = explode(',' ,$latlng);
+    $latlng_split = explode(',', $latlng);
     $latitude = $latlng_split[0];
     $longitude = $latlng_split[1];
 
     $db = \CC\Helper\DB::instance();
     $insert_stmt = $db->prepare('
-        INSERT INTO Incentives (latitude, longitude, description, category_id)
+        INSERT INTO Incidents (latitude, longitude, description, category_id)
         VALUES (:latitude, :longitude, :description, :category_id)
     ');
     $insert_stmt->execute(array(
@@ -86,6 +88,8 @@ $app->post('/v1/incidents', function () use ($app) {
         ':description' => $description,
         ':category_id' => $category_id
     ));
+
+    $incident_id = $db->lastInsertId();
 
     if (isset($_FILES['image']) == true && $_FILES['image']['name'] != '') {
         $filename = null;
@@ -102,34 +106,92 @@ $app->post('/v1/incidents', function () use ($app) {
         // Try to upload file
         try {
             // Success!
-            $file->upload($this->id . uniqid('_'));
+            $file->upload($incident_id . uniqid('_'));
             $filename = $file->getNameWithExtension();
         } catch (\Exception $e) {
             // Fail!
             \Slim\Slim::getInstance()->getLog()->error('Failed to upload file on create!');
         }
 
-        $this->lesson_upload_file_name = $filename;
-    }*/
+        $insert_stmt = $db->prepare('
+            INSERT INTO IncidentPhotos (incentive_id, image_src)
+            VALUES (:incentive_id, :image_src)
+        ');
+        $insert_stmt->execute(array(
+            ':incentive_id' => $incident_id,
+            ':image_src' => $filename
+        ));
+    }
 
+    $app->response()->status(200);
 });
 
 $app->get('/v1/categories', function () use ($app) {
+    $db = \CC\Helper\DB::instance();
+    $get_stmt = $db->prepare('
+        SELECT id, title, date_created
+        FROM Categories
+    ');
+    $get_stmt->setFetchMode(PDO::FETCH_CLASS, 'CC\Model\Category');
+    $get_stmt->execute();
+    $categories = $get_stmt->fetchAll();
 
+    $app->response()->write(json_encode(array(
+        'categories' => $categories
+    )));
 });
 
-$app->post('/v1/incidents/:id/vote', function ($id) use ($app) {
+$app->post('/v1/incidents/:id/vote', function ($incident_id) use ($app) {
+    $db = \CC\Helper\DB::instance();
+    $insert_stmt = $db->prepare('
+        INSERT INTO IncidentVotes (incident_id)
+        VALUES (:incident_id)
+    ');
+    $insert_stmt->execute(array(
+        ':incident_id' => $incident_id
+    ));
 
+    $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/flag', function ($id) use ($app) {
+$app->post('/v1/incidents/:id/flag', function ($incident_id) use ($app) {
+    $db = \CC\Helper\DB::instance();
+    $update_stmt = $db->prepare('
+        UPDATE Incidents
+        SET is_flagged = NOW()
+        WHERE id = :id
+    ');
+    $update_stmt->execute(array(
+        ':id' => $incident_id
+    ));
 
+    $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/close', function ($id) use ($app) {
+$app->post('/v1/incidents/:id/close', function ($incident_id) use ($app) {
+    $db = \CC\Helper\DB::instance();
+    $update_stmt = $db->prepare('
+        UPDATE Incidents
+        SET is_closed = NOW()
+        WHERE id = :id
+    ');
+    $update_stmt->execute(array(
+        ':id' => $incident_id
+    ));
 
+    $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/open', function ($id) use ($app) {
+$app->post('/v1/incidents/:id/open', function ($incident_id) use ($app) {
+    $db = \CC\Helper\DB::instance();
+    $update_stmt = $db->prepare('
+        UPDATE Incidents
+        SET is_closed = null
+        WHERE id = :id
+    ');
+    $update_stmt->execute(array(
+        ':id' => $incident_id
+    ));
 
+    $app->response()->status(200);
 });

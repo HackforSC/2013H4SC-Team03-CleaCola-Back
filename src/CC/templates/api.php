@@ -60,7 +60,7 @@
                     </tr>
                     <tr>
                         <td><strong>Return Data (JSON)</strong></td>
-                        <td><code><br> id : int,<br> description: string,<br> latlng : string,<br> date_created: string,<br> image_src = string<br></code></td>
+                        <td><code><br> id : int,<br> description: string,<br> latlng : string,<br> date_created: string,<br> image_src = string,<br> votes = int,<br> is_closed: datetime,<br> is_flagged: datetime</code></td>
                     </tr>
                 </table>
             </div>
