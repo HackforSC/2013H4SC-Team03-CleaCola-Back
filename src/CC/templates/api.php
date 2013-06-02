@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
-                        <td><code>lat,lng = string,string (default: columbia, sc)<br>range = int (default: 20 miles)<br>category_id = int (default: all)</code></td>
+                        <td><code>latlng = string,string (default: columbia, sc)<br>range = int (default: 20 miles)<br>category_id = int (default: all)</code></td>
                     </tr>
                     <tr>
                         <td><strong>Return Codes</strong></td>
@@ -60,7 +60,7 @@
                     </tr>
                     <tr>
                         <td><strong>Return Data (JSON)</strong></td>
-                        <td><code>{ id : int, description: string, latlng : string, date_created: string, image_src = string }</code></td>
+                        <td><code><br> id : int,<br> description: string,<br> latlng : string,<br> date_created: string,<br> image_src = string<br></code></td>
                     </tr>
                 </table>
             </div>
@@ -82,7 +82,7 @@
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
-                        <td><code>{ latlng : string (required), category_id : int (required), description : string (required), image = blog (required)}</code></td>
+                        <td><code>latlng : string (required),<br> category_id : int (required),<br> description : string (required),<br> image = blog (required)</code></td>
                     </tr>
                     <tr>
                         <td><strong>Return Codes</strong></td>
