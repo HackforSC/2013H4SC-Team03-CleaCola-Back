@@ -15,7 +15,7 @@ $app->get('/v1/incidents', function () use ($app) {
     // define the defaults
     if (is_null($latlng)) {
         // use columbia, sc
-        $latlng = '34.0006,81.0350';
+        $latlng = '34.0006,-81.0350';
     }
 
     if (is_null($range)) {
