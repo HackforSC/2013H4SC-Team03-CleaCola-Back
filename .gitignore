@@ -3,3 +3,4 @@ uploads/*
 .idea/
 vendor/
 *.DS_Store
+public_html/images/incidents/*
