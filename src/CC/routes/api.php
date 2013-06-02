@@ -32,9 +32,8 @@ $app->get('/v1/incidents', function () use ($app) {
 
     $db = \CC\Helper\DB::instance();
     $stmt = $db->prepare('
-        SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
+        SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id
         FROM Incidents
-        LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
         WHERE category_id = :category_id AND is_closed = \'0000-00-00 00:00:00\'
         HAVING distance <= :range
     ');
