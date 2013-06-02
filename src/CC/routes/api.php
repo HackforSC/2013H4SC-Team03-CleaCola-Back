@@ -163,7 +163,7 @@ $app->post('/incidents/:id/images', function($incident_id) use ($app) {
 
         $filename = null;
 
-        $storage = new \Upload\Storage\FileSystem(realpath(dirname(__FILE__) . '/../../../uploads/'));
+        $storage = new \Upload\Storage\FileSystem(realpath(dirname(__FILE__) . '/../../../public_html/images/incidents/'));
         $file = new \Upload\File('image', $storage);
 
         // Validate file upload
