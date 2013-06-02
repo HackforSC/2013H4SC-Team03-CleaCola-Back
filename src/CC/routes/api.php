@@ -95,6 +95,9 @@ $app->post('/v1/incidents', function () use ($app) {
     $category_id = $app->request()->post('category_id');
     $description = $app->request()->post('description');
 
+    $app->getLog()->error($latitude . ' and ' . $longitude . ' and ' . $category_id . ' and ' . $description);
+    exit();
+
     if (is_null($latitude) || is_null($longitude) || is_null($category_id) || is_null($description)) {
         $app->response()->status(404);
     }
