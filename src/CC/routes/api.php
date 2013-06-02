@@ -26,7 +26,7 @@ $app->get('/v1/incidents', function () use ($app) {
         $category_id = 1;
     }
 
-    $latlng_split = explode(',' ,$latlng);
+    $latlng_split = explode(',', $latlng);
     $latitude = $latlng_split[0];
     $longitude = $latlng_split[1];
 
@@ -46,7 +46,7 @@ $app->get('/v1/incidents', function () use ($app) {
 
     $incidents = $stmt->fetchAll(\PDO::FETCH_CLASS, 'CC\Model\Incident');
 
-    $app->response()->write(json_encode($incidents));
+    $app->response()->write(json_encode(array('incidents' => $incidents)));
 });
 
 $app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
