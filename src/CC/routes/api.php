@@ -24,7 +24,7 @@ $app->get('/incidents', function () use ($app) {
     }
 
     if (is_null($category_id)) {
-        $category_id = 1;
+        $category_id = 0;
     }
 
     $latlng_split = explode(',', $latlng);
@@ -35,14 +35,12 @@ $app->get('/incidents', function () use ($app) {
     $stmt = $db->prepare('
         SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, title
         FROM Incidents
-        WHERE category_id = :category_id AND is_closed = \'0000-00-00 00:00:00\'
         HAVING distance <= :range
     ');
     $stmt->execute(array(
         ':latitude' => $latitude,
         ':longitude' => $longitude,
-        ':range' => $range,
-        ':category_id' => $category_id
+        ':range' => $range
     ));
 
     $incidents = $stmt->fetchAll(\PDO::FETCH_CLASS, 'CC\Model\Incident');
@@ -101,7 +99,7 @@ $app->post('/incidents', function () use ($app) {
     $title = $app->request()->post('title');
 
     if (is_null($latitude) || is_null($longitude) || is_null($category_id) || is_null($description) || is_null($title)) {
-        $app->halt(404);
+        $app->halt(406);
     }
 
     $db = \CC\Helper\DB::instance();
