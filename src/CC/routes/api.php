@@ -153,7 +153,24 @@ $app->post('/incidents', function () use ($app) {
         ));
     }
 
+    $db = \CC\Helper\DB::instance();
+    $get_stmt = $db->prepare('
+        SELECT Incidents.id, title, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) AS votes
+        FROM Incidents
+        LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
+        WHERE Incidents.id = :id
+    ');
+
+    $get_stmt->execute(array(
+        ':id' => $incident_id
+    ));
+    $get_stmt->setFetchMode(\PDO::FETCH_INTO, new \CC\Model\Incident());
+    $incident = $get_stmt->fetch();
+
     $app->response()->status(200);
+    $app->response()->write(json_encode(array(
+        'incident' => $incident
+    )));
 });
 
 $app->post('/incidents/:id/images', function ($incident_id) use ($app) {
