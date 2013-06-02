@@ -60,7 +60,37 @@
                     </tr>
                     <tr>
                         <td><strong>Return Data (JSON)</strong></td>
-                        <td><code><br> id : int,<br> description: string,<br> latlng : string,<br> date_created: string,<br> image_src = string,<br> votes = int,<br> is_closed: datetime,<br> is_flagged: datetime</code></td>
+                        <td><code><br> id : int,<br> description: string,<br> latlng : string,<br> date_created: string,<br> votes = int,<br> is_closed: datetime,<br> is_flagged: datetime</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="well">
+                <h3>Get Incident Images</h3>
+                <table>
+                    <tr>
+                        <td><strong>Description</strong></td>
+                        <td>Get images for a specific image</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Method</strong></td>
+                        <td>GET</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Point</strong></td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/images</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Request Parameters</strong></td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Return Codes</strong></td>
+                        <td>200, 500</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Return Data (JSON)</strong></td>
+                        <td><code>[{image_src}, {image_src}]</code></td>
                     </tr>
                 </table>
             </div>
@@ -83,6 +113,36 @@
                     <tr>
                         <td><strong>Request Parameters</strong></td>
                         <td><code>latlng : string (required),<br> category_id : int (required),<br> description : string (required),<br> image = blog (required)</code></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Return Codes</strong></td>
+                        <td>200, 404, 500</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Return Data (JSON)</strong></td>
+                        <td>None</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="well">
+                <h3>Add Image to Incident</h3>
+                <table>
+                    <tr>
+                        <td><strong>Description</strong></td>
+                        <td>Adds an image to a pre-existing incident</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Method</strong></td>
+                        <td>POST</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Point</strong></td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/images</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Request Parameters</strong></td>
+                        <td><code>image = blog (required)</code></td>
                     </tr>
                     <tr>
                         <td><strong>Return Codes</strong></td>

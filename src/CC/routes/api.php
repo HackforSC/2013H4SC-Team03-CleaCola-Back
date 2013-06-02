@@ -1,13 +1,13 @@
 <?php
 
-$app->response()->header('Content-Type', 'application/json');
-
 $app->get('/', function () use ($app) {
     $app->response()->header('Content-Type', 'text/html');
     $app->render('api.php');
 });
 
 $app->get('/v1/incidents', function () use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $latlng = $app->request()->get('latlng');
     $range = $app->request()->get('range');
     $category_id = $app->request()->get('category_id');
@@ -50,6 +50,8 @@ $app->get('/v1/incidents', function () use ($app) {
 });
 
 $app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
         SELECT Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
@@ -67,14 +69,31 @@ $app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
     $app->response()->write(json_encode($incident));
 });
 
+$app->get('/v1/incidents/:id/images', function ($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
+    $db = \CC\Helper\DB::instance();
+    $get_stmt = $db->prepare('
+        SELECT image_src
+        FROM IncidentPhotos
+        WHERE incident_id = :incident_id
+    ');
+
+    $get_stmt->execute(array(
+        ':incident_id' => $incident_id
+    ));
+    $incident = $get_stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $app->response()->write(json_encode($incident));
+});
+
 $app->post('/v1/incidents', function () use ($app) {
-    $latlng = $app->request()->post('latlng');
+    $app->response()->header('Content-Type', 'application/json');
+
+    $latitude = $app->request()->post('latitude');
+    $longitude = $app->request()->post('longitude');
     $category_id = $app->request()->post('category_id');
     $description = $app->request()->post('description');
-
-    $latlng_split = explode(',', $latlng);
-    $latitude = $latlng_split[0];
-    $longitude = $latlng_split[1];
 
     $db = \CC\Helper\DB::instance();
     $insert_stmt = $db->prepare('
@@ -126,6 +145,8 @@ $app->post('/v1/incidents', function () use ($app) {
 });
 
 $app->get('/v1/categories', function () use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
         SELECT id, title, date_created
@@ -141,6 +162,8 @@ $app->get('/v1/categories', function () use ($app) {
 });
 
 $app->post('/v1/incidents/:id/vote', function ($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $db = \CC\Helper\DB::instance();
     $insert_stmt = $db->prepare('
         INSERT INTO IncidentVotes (incident_id)
@@ -154,6 +177,8 @@ $app->post('/v1/incidents/:id/vote', function ($incident_id) use ($app) {
 });
 
 $app->post('/v1/incidents/:id/flag', function ($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $db = \CC\Helper\DB::instance();
     $update_stmt = $db->prepare('
         UPDATE Incidents
@@ -168,6 +193,8 @@ $app->post('/v1/incidents/:id/flag', function ($incident_id) use ($app) {
 });
 
 $app->post('/v1/incidents/:id/close', function ($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $db = \CC\Helper\DB::instance();
     $update_stmt = $db->prepare('
         UPDATE Incidents
@@ -182,6 +209,8 @@ $app->post('/v1/incidents/:id/close', function ($incident_id) use ($app) {
 });
 
 $app->post('/v1/incidents/:id/open', function ($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+
     $db = \CC\Helper\DB::instance();
     $update_stmt = $db->prepare('
         UPDATE Incidents
