@@ -188,7 +188,7 @@ $app->post('/incidents/:id/images', function($incident_id) use ($app) {
         ');
         $insert_stmt->execute(array(
             ':incentive_id' => $incident_id,
-            ':image_src' => $filename
+            ':image_src' => 'http://api.cleancola.org/images/incidents/' . $filename
         ));
     }
 });
