@@ -65,5 +65,6 @@ $password = $database_options['environments'][$app->getMode()]['pass'];
 ));
 
 require realpath(dirname(__FILE__) . '/../src/CC') . '/routes/api.php';
+require realpath(dirname(__FILE__) . '/../src/CC') . '/routes/map.php';
 
 $app->run();
