@@ -48,6 +48,24 @@ $app->get('/incidents', function () use ($app) {
     $app->response()->write(json_encode(array('incidents' => $incidents)));
 });
 
+$app->get('/incidents/images', function() use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
+
+    $db = \CC\Helper\DB::instance();
+    $get_stmt = $db->prepare('
+        SELECT image_src
+        FROM IncidentPhotos
+    ');
+
+    $get_stmt->execute();
+    $incident = $get_stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $app->response()->write(json_encode(array(
+        'images' => $incident
+    )));
+});
+
 $app->get('/incidents/:id', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
     $app->response()->header('Api-Version', '1');
@@ -210,6 +228,22 @@ $app->post('/incidents/:id/images', function ($incident_id) use ($app) {
             ':image_src' => 'http://api.cleancola.org/images/incidents/' . $filename
         ));
     }
+
+    $db = \CC\Helper\DB::instance();
+    $get_stmt = $db->prepare('
+        SELECT image_src
+        FROM IncidentPhotos
+        WHERE incident_id = :incident_id
+    ');
+
+    $get_stmt->execute(array(
+        ':incident_id' => $incident_id
+    ));
+    $incident = $get_stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+    $app->response()->write(json_encode(array(
+        'images' => $incident
+    )));
 });
 
 $app->get('/categories', function () use ($app) {
