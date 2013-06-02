@@ -42,8 +42,8 @@ $incidents = $get_stmt->fetchAll(\PDO::FETCH_CLASS, 'CC\Model\Incident');
             coordinates: [<?php echo (int)$incident->longitude; ?>, <?php echo (int)$incident->latitude; ?>]
         },
         properties: {
-            title: '<?php echo $incident->title; ?>',
-            description: '<?php echo $incident->description; ?>',
+            title: "<?php echo $incident->title; ?>",
+            description: "<?php echo $incident->description; ?>",
             // one can customize markers by adding simplestyle properties
             // http://mapbox.com/developers/simplestyle/
             'marker-size': 'large',
