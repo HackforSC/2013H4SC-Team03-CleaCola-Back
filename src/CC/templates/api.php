@@ -18,7 +18,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents</td>
+                        <td>http://api.cleancola.org/incidents</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -48,7 +48,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id</td>
+                        <td>http://api.cleancola.org/incidents/:id</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -78,7 +78,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/images</td>
+                        <td>http://api.cleancola.org/incidents/:id/images</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -108,7 +108,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents</td>
+                        <td>http://api.cleancola.org/incidents</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -138,7 +138,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/images</td>
+                        <td>http://api.cleancola.org/incidents/:id/images</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -168,7 +168,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/vote</td>
+                        <td>http://api.cleancola.org/incidents/:id/vote</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -198,7 +198,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/categories</td>
+                        <td>http://api.cleancola.org/categories</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -228,7 +228,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/flag</td>
+                        <td>http://api.cleancola.org/incidents/:id/flag</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -258,7 +258,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/close</td>
+                        <td>http://api.cleancola.org/incidents/:id/close</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -288,7 +288,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/open</td>
+                        <td>http://api.cleancola.org/incidents/:id/open</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
@@ -318,7 +318,7 @@
                     </tr>
                     <tr>
                         <td><strong>End Point</strong></td>
-                        <td>http://api.cleancola.org/v1/incidents/:id/attend</td>
+                        <td>http://api.cleancola.org/incidents/:id/attend</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>

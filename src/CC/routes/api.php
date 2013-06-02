@@ -5,8 +5,9 @@ $app->get('/', function () use ($app) {
     $app->render('api.php');
 });
 
-$app->get('/v1/incidents', function () use ($app) {
+$app->get('/incidents', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $latlng = $app->request()->get('latlng');
     $range = $app->request()->get('range');
@@ -49,8 +50,9 @@ $app->get('/v1/incidents', function () use ($app) {
     $app->response()->write(json_encode(array('incidents' => $incidents)));
 });
 
-$app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
+$app->get('/incidents/:id', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
@@ -69,8 +71,9 @@ $app->get('/v1/incidents/:id', function ($incident_id) use ($app) {
     $app->response()->write(json_encode($incident));
 });
 
-$app->get('/v1/incidents/:id/images', function ($incident_id) use ($app) {
+$app->get('/incidents/:id/images', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
@@ -87,8 +90,9 @@ $app->get('/v1/incidents/:id/images', function ($incident_id) use ($app) {
     $app->response()->write(json_encode($incident));
 });
 
-$app->post('/v1/incidents', function () use ($app) {
+$app->post('/incidents', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $latitude = $app->request()->post('latitude');
     $longitude = $app->request()->post('longitude');
@@ -150,7 +154,10 @@ $app->post('/v1/incidents', function () use ($app) {
     $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/images', function($incident_id) use ($app) {
+$app->post('/incidents/:id/images', function($incident_id) use ($app) {
+    $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
+
     if (isset($_FILES['image']) == true && $_FILES['image']['name'] != '') {
         $db = CC\Helper\DB::instance();
 
@@ -186,8 +193,9 @@ $app->post('/v1/incidents/:id/images', function($incident_id) use ($app) {
     }
 });
 
-$app->get('/v1/categories', function () use ($app) {
+$app->get('/categories', function () use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
@@ -203,8 +211,9 @@ $app->get('/v1/categories', function () use ($app) {
     )));
 });
 
-$app->post('/v1/incidents/:id/attend', function ($incident_id) use ($app) {
+$app->post('/incidents/:id/attend', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $insert_stmt = $db->prepare('
@@ -219,8 +228,9 @@ $app->post('/v1/incidents/:id/attend', function ($incident_id) use ($app) {
     $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/flag', function ($incident_id) use ($app) {
+$app->post('/incidents/:id/flag', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $update_stmt = $db->prepare('
@@ -235,8 +245,9 @@ $app->post('/v1/incidents/:id/flag', function ($incident_id) use ($app) {
     $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/close', function ($incident_id) use ($app) {
+$app->post('/incidents/:id/close', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $update_stmt = $db->prepare('
@@ -251,8 +262,9 @@ $app->post('/v1/incidents/:id/close', function ($incident_id) use ($app) {
     $app->response()->status(200);
 });
 
-$app->post('/v1/incidents/:id/open', function ($incident_id) use ($app) {
+$app->post('/incidents/:id/open', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
+    $app->response()->header('Api-Version', '1');
 
     $db = \CC\Helper\DB::instance();
     $update_stmt = $db->prepare('
