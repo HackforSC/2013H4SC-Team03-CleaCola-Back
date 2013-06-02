@@ -54,7 +54,7 @@ $app->get('/incidents/:id', function ($incident_id) use ($app) {
 
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
-        SELECT Incidents.id, title, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
+        SELECT Incidents.id, title, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) AS votes
         FROM Incidents
         LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
         WHERE Incidents.id = :id
@@ -66,7 +66,9 @@ $app->get('/incidents/:id', function ($incident_id) use ($app) {
     $get_stmt->setFetchMode(\PDO::FETCH_INTO, new \CC\Model\Incident());
     $incident = $get_stmt->fetch();
 
-    $app->response()->write(json_encode($incident));
+    $app->response()->write(json_encode(array(
+        'incident' => $incident
+    )));
 });
 
 $app->get('/incidents/:id/images', function ($incident_id) use ($app) {
@@ -154,7 +156,7 @@ $app->post('/incidents', function () use ($app) {
     $app->response()->status(200);
 });
 
-$app->post('/incidents/:id/images', function($incident_id) use ($app) {
+$app->post('/incidents/:id/images', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
     $app->response()->header('Api-Version', '1');
 
