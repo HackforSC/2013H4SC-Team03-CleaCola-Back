@@ -39,7 +39,7 @@ $incidents = $get_stmt->fetchAll(\PDO::FETCH_CLASS, 'CC\Model\Incident');
             type: 'Point',
             // coordinates here are in longitude, latitude order because
             // x, y is the standard for GeoJSON and many formats
-            coordinates: [<?php echo (int)$incident->longitude; ?>, <?php echo (int)$incident->latitude; ?>]
+            coordinates: [<?php echo (float)$incident->longitude; ?>, <?php echo (float)$incident->latitude; ?>]
         },
         properties: {
             title: "<?php echo $incident->title; ?>",
