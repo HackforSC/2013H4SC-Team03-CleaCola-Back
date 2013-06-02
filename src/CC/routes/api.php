@@ -97,6 +97,7 @@ $app->post('/v1/incidents', function () use ($app) {
 
     if ($latitude == false || $longitude == false || $category_id == false || $description == false) {
         $app->response()->status(404);
+        exit();
     }
 
     $db = \CC\Helper\DB::instance();
