@@ -169,7 +169,7 @@ $app->post('/incidents', function () use ($app) {
 
     $app->response()->status(200);
     $app->response()->write(json_encode(array(
-        'incident' => $incident
+        'incidents' => $incident
     )));
 });
 
