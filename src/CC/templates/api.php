@@ -36,7 +36,7 @@
             </div>
 
             <div class="well">
-                <h3>Get Incidents</h3>
+                <h3>Get Incident</h3>
                 <table>
                     <tr>
                         <td><strong>Description</strong></td>
