@@ -72,7 +72,7 @@ $app->get('/incidents/:id', function ($incident_id) use ($app) {
 
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
-        SELECT Incidents.id, title, latitude,  longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) AS votes, incidentphotos.image_src
+        SELECT Incidents.id, title, latitude,  longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) AS votes, IncidentPhotos.image_src
         FROM Incidents
         LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
         LEFT JOIN IncidentPhotos ON IncidentPhotos.incident_id = Incidents.id
