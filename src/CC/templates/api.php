@@ -22,7 +22,7 @@
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
-                        <td><code>latlng = string,string (default: columbia, sc)<br>range = int (default: 20 miles)<br>category_id = int (default: all)</code></td>
+                        <td><code>latlng = string,string (default: columbia, sc @ state house)<br>range = int (default: 20 miles)<br>category_id = int (default: all)</code></td>
                     </tr>
                     <tr>
                         <td><strong>Return Codes</strong></td>
