@@ -79,7 +79,7 @@
         </tr>
         <tr>
             <td><strong>Return Data (JSON)</strong></td>
-            <td><code>id : int,<br> description: string,<br> latlng : string,<br> date_created: string,<br> votes =
+            <td><code>id : int,<br>title : string,<br> description: string,<br> latlng : string,<br> date_created: string,<br> votes =
                     int,<br> is_closed: datetime,<br> is_flagged: datetime</code></td>
         </tr>
     </table>
@@ -133,7 +133,7 @@
         <tr>
             <td><strong>Request Parameters</strong></td>
             <td><code>latitude : string (required),<br>longitude : string (required),<br> category_id : int
-                    (required),<br> description : string (required),<br> image = multipart/form-data</code></td>
+                    (required),<br> description : string (required),<br>title : string (required),<br> image = multipart/form-data</code></td>
         </tr>
         <tr>
             <td><strong>Return Codes</strong></td>
