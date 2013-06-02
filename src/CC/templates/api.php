@@ -112,7 +112,7 @@
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
-                        <td><code>latlng : string (required),<br> category_id : int (required),<br> description : string (required),<br> image = blog (required)</code></td>
+                        <td><code>latitude : string (required),<br>longitude : string (required),<br> category_id : int (required),<br> description : string (required),<br> image = multipart/form-data</code></td>
                     </tr>
                     <tr>
                         <td><strong>Return Codes</strong></td>
@@ -142,7 +142,7 @@
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>
-                        <td><code>image = blog (required)</code></td>
+                        <td><code>image = multipart/form-data (required)</code></td>
                     </tr>
                     <tr>
                         <td><strong>Return Codes</strong></td>
@@ -289,6 +289,36 @@
                     <tr>
                         <td><strong>End Point</strong></td>
                         <td>http://api.cleancola.org/v1/incidents/:id/open</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Request Parameters</strong></td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Return Codes</strong></td>
+                        <td>200, 500</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Return Data (JSON)</strong></td>
+                        <td>None</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="well">
+                <h3>Increase attending count</h3>
+                <table>
+                    <tr>
+                        <td><strong>Description</strong></td>
+                        <td>Mark that someone is going to attend this incident</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Method</strong></td>
+                        <td>POST</td>
+                    </tr>
+                    <tr>
+                        <td><strong>End Point</strong></td>
+                        <td>http://api.cleancola.org/v1/incidents/:id/attend</td>
                     </tr>
                     <tr>
                         <td><strong>Request Parameters</strong></td>

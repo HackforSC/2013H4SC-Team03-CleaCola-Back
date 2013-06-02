@@ -110,6 +110,8 @@ $app->post('/v1/incidents', function () use ($app) {
     $incident_id = $db->lastInsertId();
 
     if (isset($_FILES['image']) == true && $_FILES['image']['name'] != '') {
+        $db = CC\Helper\DB::instance();
+
         $filename = null;
 
         $storage = new \Upload\Storage\FileSystem(realpath(dirname(__FILE__) . '/../../../uploads/'));
@@ -132,7 +134,7 @@ $app->post('/v1/incidents', function () use ($app) {
         }
 
         $insert_stmt = $db->prepare('
-            INSERT INTO IncidentPhotos (incentive_id, image_src)
+            INSERT INTO IncidentPhotos (incident_id, image_src)
             VALUES (:incentive_id, :image_src)
         ');
         $insert_stmt->execute(array(
@@ -142,6 +144,42 @@ $app->post('/v1/incidents', function () use ($app) {
     }
 
     $app->response()->status(200);
+});
+
+$app->post('/v1/incidents/:id/images', function($incident_id) use ($app) {
+    if (isset($_FILES['image']) == true && $_FILES['image']['name'] != '') {
+        $db = CC\Helper\DB::instance();
+
+        $filename = null;
+
+        $storage = new \Upload\Storage\FileSystem(realpath(dirname(__FILE__) . '/../../../uploads/'));
+        $file = new \Upload\File('image', $storage);
+
+        // Validate file upload
+        $file->addValidations(array(
+            // Ensure file is no larger than 5M (use "B", "K", M", or "G")
+            new \Upload\Validation\Size('5M')
+        ));
+
+        // Try to upload file
+        try {
+            // Success!
+            $file->upload($incident_id . uniqid('_'));
+            $filename = $file->getNameWithExtension();
+        } catch (\Exception $e) {
+            // Fail!
+            \Slim\Slim::getInstance()->getLog()->error('Failed to upload file on create!');
+        }
+
+        $insert_stmt = $db->prepare('
+            INSERT INTO IncidentPhotos (incident_id, image_src)
+            VALUES (:incentive_id, :image_src)
+        ');
+        $insert_stmt->execute(array(
+            ':incentive_id' => $incident_id,
+            ':image_src' => $filename
+        ));
+    }
 });
 
 $app->get('/v1/categories', function () use ($app) {
@@ -161,13 +199,14 @@ $app->get('/v1/categories', function () use ($app) {
     )));
 });
 
-$app->post('/v1/incidents/:id/vote', function ($incident_id) use ($app) {
+$app->post('/v1/incidents/:id/attend', function ($incident_id) use ($app) {
     $app->response()->header('Content-Type', 'application/json');
 
     $db = \CC\Helper\DB::instance();
     $insert_stmt = $db->prepare('
-        INSERT INTO IncidentVotes (incident_id)
-        VALUES (:incident_id)
+        UPDATE Incidents
+        SET attending_count = attending_count + 1
+        WHERE id = :incident_id
     ');
     $insert_stmt->execute(array(
         ':incident_id' => $incident_id
