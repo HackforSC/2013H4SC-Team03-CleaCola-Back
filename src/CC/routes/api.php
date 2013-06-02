@@ -96,8 +96,7 @@ $app->post('/v1/incidents', function () use ($app) {
     $description = $app->request()->post('description');
 
     if (is_null($latitude) || is_null($longitude) || is_null($category_id) || is_null($description)) {
-        $app->response()->status(404);
-        exit();
+        $app->halt(404);
     }
 
     $db = \CC\Helper\DB::instance();
