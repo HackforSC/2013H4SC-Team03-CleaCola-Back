@@ -10,4 +10,5 @@ class Incident
     public $is_flagged;
     public $is_closed;
     public $category_id;
+    public $title;
 }

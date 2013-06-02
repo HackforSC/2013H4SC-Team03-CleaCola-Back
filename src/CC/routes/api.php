@@ -33,7 +33,7 @@ $app->get('/incidents', function () use ($app) {
 
     $db = \CC\Helper\DB::instance();
     $stmt = $db->prepare('
-        SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id
+        SELECT ((ACOS(SIN(:latitude * PI() / 180) * SIN(Incidents.latitude * PI() / 180) + COS(:latitude * PI() / 180) * COS(Incidents.latitude * PI() / 180) * COS((:longitude - Incidents.longitude) * PI() / 180)) * 180 / PI()) * 60 * 1.1515) AS distance, Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, title
         FROM Incidents
         WHERE category_id = :category_id AND is_closed = \'0000-00-00 00:00:00\'
         HAVING distance <= :range
@@ -56,7 +56,7 @@ $app->get('/incidents/:id', function ($incident_id) use ($app) {
 
     $db = \CC\Helper\DB::instance();
     $get_stmt = $db->prepare('
-        SELECT Incidents.id, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
+        SELECT Incidents.id, title, latitude, longitude, description, Incidents.date_created, is_flagged, is_closed, category_id, COUNT(IncidentVotes.id) as votes
         FROM Incidents
         LEFT JOIN IncidentVotes ON IncidentVotes.incident_id = Incidents.id
         WHERE Incidents.id = :id
@@ -98,21 +98,23 @@ $app->post('/incidents', function () use ($app) {
     $longitude = $app->request()->post('longitude');
     $category_id = $app->request()->post('category_id');
     $description = $app->request()->post('description');
+    $title = $app->request()->post('title');
 
-    if (is_null($latitude) || is_null($longitude) || is_null($category_id) || is_null($description)) {
+    if (is_null($latitude) || is_null($longitude) || is_null($category_id) || is_null($description) || is_null($title)) {
         $app->halt(404);
     }
 
     $db = \CC\Helper\DB::instance();
     $insert_stmt = $db->prepare('
-        INSERT INTO Incidents (latitude, longitude, description, category_id)
-        VALUES (:latitude, :longitude, :description, :category_id)
+        INSERT INTO Incidents (latitude, longitude, description, category_id, title)
+        VALUES (:latitude, :longitude, :description, :category_id, :title)
     ');
     $insert_stmt->execute(array(
         ':latitude' => $latitude,
         ':longitude' => $longitude,
         ':description' => $description,
-        ':category_id' => $category_id
+        ':category_id' => $category_id,
+        ':title' => $title
     ));
 
     $incident_id = $db->lastInsertId();
